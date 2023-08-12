@@ -8,18 +8,18 @@ namespace Music_Junction_Box.Processors
 {
     internal class FilesGrubber
     {
-        private string InputPath;
+        private string _path;
         private FileInfo[] Files;
         public List<string> SortedPaths { get; private set; }
-        public FilesGrubber(string inputPath) 
+        public FilesGrubber(string path) 
         {
-            InputPath = inputPath;
+            _path = path;
             ScanDirectory();
             FillSortedPaths();
         }
         private void ScanDirectory() 
         {
-            DirectoryInfo di = new DirectoryInfo(InputPath);
+            DirectoryInfo di = new DirectoryInfo(_path);
             Files = di.GetFiles();
         }
         private void FillSortedPaths() 
