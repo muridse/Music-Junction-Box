@@ -22,19 +22,32 @@ namespace Music_Junction_Box.Processors
             _destinationPath = destinationPath;
             SortedFiles = _filesGrubber.SortedPaths;
         }
-        public void DestributeToDestinationPath() 
+        public void DestributeToDestinationPath()
         {
             var filesSplitedList = GetBucketedFiles();
-            for (int i = 0; i < filesSplitedList.Count; i++)
-            {
-                var bucketPath = _destinationPath + $"\\CD_{i + 1}";
-                Directory.CreateDirectory(bucketPath);
-                for (int j = 0; j < filesSplitedList[i].Count; j++)
-                {
-                    var arrayOfFilePath = filesSplitedList[i][j].Split('\\', StringSplitOptions.RemoveEmptyEntries);
-                    _filesMover.MoveFile(filesSplitedList[i][j], 
-                        bucketPath + arrayOfFilePath[arrayOfFilePath.Length - 1]);
+            
+            int maxCount = 0;
+            foreach (var fileList in filesSplitedList) 
+                if (fileList.Count >= maxCount) maxCount = fileList.Count;
 
+            int counter = 0;
+            for (int j = 0; j < filesSplitedList.Count; j++)
+            {
+                for (int i = 0; i < maxCount; i++)
+                {
+                    if (filesSplitedList[j].Count > i) 
+                    {
+                        var bucketPath = _destinationPath + $"\\CD_{counter + 1}";
+                        if (!Directory.Exists(bucketPath))
+                            Directory.CreateDirectory(bucketPath);
+
+                        var arrayOfFilePath = filesSplitedList[j][i].Split('\\', StringSplitOptions.RemoveEmptyEntries);
+                        _filesMover.MoveFile(filesSplitedList[j][i],
+                            bucketPath + "\\" + $"_{counter + 1}_" + arrayOfFilePath[arrayOfFilePath.Length - 1]);
+                        
+                        counter++;
+                        if (counter >= _bucketsCount) counter = 0;
+                    }
                 }
             }
         }
@@ -42,15 +55,21 @@ namespace Music_Junction_Box.Processors
         {
             var buckets = new List<List<string>>();
             var filesLen = SortedFiles.Count;
-            var splitPoints = GetSplitPoints();
+            int margin;
+            var splitPoints = GetSplitPoints(out margin);
             for (int i = 0; i < splitPoints.Length - 1; i++)
             {
                 buckets.Add(SortedFiles.GetRange(splitPoints[i], splitPoints[i+1] - splitPoints[i]));
             }
+            for (int i = 0; i < margin; i++)
+            {
+                buckets[buckets.Count - 1].Add(SortedFiles[SortedFiles.Count - i]);
+            }
             return buckets;
         }
-        private int[] GetSplitPoints() 
+        private int[] GetSplitPoints(out int margin) 
         {
+            margin = SortedFiles.Count % _bucketsCount;
             var bucketsPoints = new int[_bucketsCount + 1];
             for (int i = 0; i < bucketsPoints.Length; i++)
             {

@@ -25,10 +25,12 @@ namespace Music_Junction_Box.Processors
         private void FillSortedPaths() 
         {
             var sortedFiles = Files.OrderBy(f => f.Length);
+            var paths = new List<string>();
             foreach (FileInfo fi in sortedFiles) 
             {
-                SortedPaths.Add(fi.ToString());
+                paths.Add(fi.FullName);
             }
+            SortedPaths = paths;
         }
         public void ShowFiles() 
         {
