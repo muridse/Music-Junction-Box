@@ -1,10 +1,5 @@
-﻿namespace Music_Junction_Box
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
-        }
-    }
-}
+﻿
+using Music_Junction_Box;
+
+var client = DialogueClient.GetInstance();
+client.Run();
