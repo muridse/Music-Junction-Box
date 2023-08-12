@@ -31,7 +31,7 @@ namespace Music_Junction_Box
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Files in 'Original' path not found! Put your files into path.");
                 Console.ForegroundColor = ConsoleColor.White;
-
+                Console.ReadKey();
                 throw new ArgumentNullException();
             }
 
@@ -51,7 +51,7 @@ namespace Music_Junction_Box
 
             
             Console.WriteLine("\nSUCCESS! Press key to exit.");
-            Console.ReadLine();
+            Console.ReadKey();
 
         }
         public void Run() 

@@ -6,7 +6,13 @@
     <RootNamespace>Music_Junction_Box</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>music-box.ico</ApplicationIcon>
+    <Configurations>Debug;Release;Music Junction Box</Configurations>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="music-box.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Collections" Version="4.3.0" />
