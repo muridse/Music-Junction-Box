@@ -36,7 +36,7 @@ namespace Music_Junction_Box.Processors
         {
             foreach (var fi in Files.OrderBy(f=>f.Length))
             {
-                Console.WriteLine($"{fi} - {Math.Round((double)fi.Length / (1024 * 1024), 2)} MB");
+                Console.WriteLine($"{fi.Name} - {Math.Round((double)fi.Length / (1024 * 1024), 2)} MB");
             }
         }
     }

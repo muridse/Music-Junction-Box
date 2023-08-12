@@ -20,6 +20,12 @@
             // Get a reference to each file in that directory.
             FileInfo[] fiArr = di.GetFiles();
             var fiArrSorted = fiArr.OrderBy(p => p.Length);
+
+
+            DirectoryInfo dic = new DirectoryInfo(test.FullName + "\\..\\music");
+            var ek = dic.GetFiles().Length == 0;
+            Console.WriteLine();
+
             foreach ( FileInfo fi in fiArrSorted ) 
             {
                 var strar = fi.ToString().Split('\\', StringSplitOptions.RemoveEmptyEntries);

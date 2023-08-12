@@ -43,7 +43,7 @@ namespace Music_Junction_Box.Processors
 
                         var arrayOfFilePath = filesSplitedList[j][i].Split('\\', StringSplitOptions.RemoveEmptyEntries);
                         _filesMover.MoveFile(filesSplitedList[j][i],
-                            bucketPath + "\\" + $"_{counter + 1}_" + arrayOfFilePath[arrayOfFilePath.Length - 1]);
+                            bucketPath + "\\" + arrayOfFilePath[arrayOfFilePath.Length - 1]);
                         
                         counter++;
                         if (counter >= _bucketsCount) counter = 0;
@@ -61,10 +61,10 @@ namespace Music_Junction_Box.Processors
             {
                 buckets.Add(SortedFiles.GetRange(splitPoints[i], splitPoints[i+1] - splitPoints[i]));
             }
-            for (int i = 0; i < margin; i++)
-            {
-                buckets[buckets.Count - 1].Add(SortedFiles[SortedFiles.Count - i]);
-            }
+            //for (int i = 0; i < margin; i++)
+            //{
+            //    buckets[buckets.Count - 1].Add(SortedFiles[SortedFiles.Count - i]);
+            //}
             return buckets;
         }
         private int[] GetSplitPoints(out int margin) 
